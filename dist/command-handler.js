@@ -3,6 +3,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.CommandHandler = void 0;
 const crypto_1 = __importDefault(require("crypto"));
 const errors_1 = require("./errors");
 const events_1 = require("./events");
@@ -74,5 +75,5 @@ class CommandHandler {
         return authenticated;
     }
 }
-exports.default = CommandHandler;
+exports.CommandHandler = CommandHandler;
 //# sourceMappingURL=command-handler.js.map

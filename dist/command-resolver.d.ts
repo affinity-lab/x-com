@@ -1,8 +1,8 @@
 /// <reference types="node" />
 import { CommandSet } from "./types";
 import { Request, Response } from "express";
-import CommandHandler from "./command-handler";
-import RequestParser from "./request-parser";
+import { CommandHandler } from "./command-handler";
+import { RequestParser } from "./request-parser";
 import { EventEmitter } from "events";
 type TResolvers = Record<string, // client
 Record<number, // version
@@ -14,7 +14,7 @@ type CommandResolverOptions = {
     cacheReader: CacheReaderFunc;
     eventEmitter: EventEmitter;
 };
-export default class CommandResolver {
+export declare class CommandResolver {
     private commandSets;
     readonly resolvers: TResolvers;
     readonly requestParser: RequestParser;

@@ -1,10 +1,10 @@
 import {Request} from "express";
 import {Files, IRequestParser} from "./types";
-import FileField from "./file-field";
+import {FileField} from "./file-field";
 import {xComError} from "./errors";
 
 
-export default class RequestParser implements IRequestParser{
+export class RequestParser implements IRequestParser {
 	parse(req: Request): { type: "json" | "form-data", args: Record<string, any>, files: Files } {
 		let type: "json" | "form-data";
 		let args;

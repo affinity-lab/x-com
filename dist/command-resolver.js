@@ -1,11 +1,9 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const command_handler_1 = __importDefault(require("./command-handler"));
+exports.CommandResolver = void 0;
+const command_handler_1 = require("./command-handler");
 const errors_1 = require("./errors");
-const request_parser_1 = __importDefault(require("./request-parser"));
+const request_parser_1 = require("./request-parser");
 const response_type_1 = require("./response-type");
 const config_1 = require("./config");
 const affinity_util_1 = require("@affinity-lab/affinity-util");
@@ -17,7 +15,7 @@ class CommandResolver {
     eventEmitter;
     constructor(commandSets, options = {}) {
         this.commandSets = commandSets;
-        this.requestParser = options.requestParser === undefined ? new request_parser_1.default() : options.requestParser;
+        this.requestParser = options.requestParser === undefined ? new request_parser_1.RequestParser() : options.requestParser;
         this.cacheReader = options.cacheReader;
         this.eventEmitter = options.eventEmitter;
         this.parse();
@@ -39,7 +37,7 @@ class CommandResolver {
                     if (!Array.isArray(client.version))
                         client.version = [client.version];
                     for (const version of client.version) {
-                        this.addCmd(new command_handler_1.default(handler, authenticated, defaultCacheOptions, cmdConfig.sanitize, cmdConfig.validate, client.client, version, command, this));
+                        this.addCmd(new command_handler_1.CommandHandler(handler, authenticated, defaultCacheOptions, cmdConfig.sanitize, cmdConfig.validate, client.client, version, command, this));
                     }
                 }
                 /* Command clients */
@@ -57,7 +55,7 @@ class CommandResolver {
                     if (!Array.isArray(client.version))
                         client.version = [client.version];
                     for (const version of client.version) {
-                        this.addCmd(new command_handler_1.default(handler, authenticated, cacheOptions, cmdConfig.sanitize, cmdConfig.validate, client.client, version, command, this));
+                        this.addCmd(new command_handler_1.CommandHandler(handler, authenticated, cacheOptions, cmdConfig.sanitize, cmdConfig.validate, client.client, version, command, this));
                     }
                 }
             }
@@ -91,5 +89,5 @@ class CommandResolver {
         }
     }
 }
-exports.default = CommandResolver;
+exports.CommandResolver = CommandResolver;
 //# sourceMappingURL=command-resolver.js.map

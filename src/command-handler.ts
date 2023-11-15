@@ -2,10 +2,10 @@ import {CacheOptions, CommandFunc, IClient} from "./types";
 import {Request, Response} from "express";
 import crypto from "crypto";
 import {xComError} from "./errors";
-import CommandResolver from "./command-resolver";
+import {CommandResolver} from "./command-resolver";
 import {XCOM_API_EVENTS} from "./events";
 
-export default class CommandHandler {
+export class CommandHandler {
 	constructor(
 		readonly handler: CommandFunc,
 		readonly authenticated: boolean,

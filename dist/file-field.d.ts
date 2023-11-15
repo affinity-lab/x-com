@@ -1,6 +1,6 @@
 /// <reference types="node" />
 import { Buffer } from "buffer";
-export default class FileField {
+export declare class FileField {
     readonly name: string;
     readonly mimetype: string;
     readonly size: number;

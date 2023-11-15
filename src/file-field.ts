@@ -2,7 +2,7 @@ import {Buffer} from "buffer";
 import * as fs from "fs";
 import path from "path";
 
-export default class FileField {
+export class FileField {
 	constructor(readonly name: string,
 				readonly mimetype: string,
 				readonly size: number,

@@ -1,7 +1,7 @@
 import { CacheOptions, CommandFunc, IClient } from "./types";
 import { Request, Response } from "express";
-import CommandResolver from "./command-resolver";
-export default class CommandHandler {
+import { CommandResolver } from "./command-resolver";
+export declare class CommandHandler {
     readonly handler: CommandFunc;
     readonly authenticated: boolean;
     readonly cacheOptions: undefined | CacheOptions;

@@ -1,6 +1,6 @@
 import {z} from "zod";
 import {XComConfig} from "../../config";
-import {ExtendedError} from "@affinity-lab/affinity-util"
+import {ExtendedError} from "@affinity-lab/affinity-util";
 
 export const CommandValidateZod = function (zodPattern: z.ZodObject<any>): MethodDecorator {
 	return function (target: object, propertyKey: string | symbol) {

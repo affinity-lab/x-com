@@ -1,9 +1,7 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 Object.defineProperty(exports, "__esModule", { value: true });
-const file_field_1 = __importDefault(require("./file-field"));
+exports.RequestParser = void 0;
+const file_field_1 = require("./file-field");
 const errors_1 = require("./errors");
 class RequestParser {
     parse(req) {
@@ -21,7 +19,7 @@ class RequestParser {
                 for (const file of req.files) {
                     if (files[file.fieldname] === undefined)
                         files[file.fieldname] = [];
-                    files[file.fieldname].push(new file_field_1.default(file.originalname, file.mimetype, file.size, file.buffer));
+                    files[file.fieldname].push(new file_field_1.FileField(file.originalname, file.mimetype, file.size, file.buffer));
                 }
             }
         }
@@ -31,5 +29,5 @@ class RequestParser {
         return { type, args, files };
     }
 }
-exports.default = RequestParser;
+exports.RequestParser = RequestParser;
 //# sourceMappingURL=request-parser.js.map

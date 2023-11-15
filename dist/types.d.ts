@@ -1,5 +1,5 @@
 import { Request } from "express";
-import FileField from "./file-field";
+import { FileField } from "./file-field";
 export type Args = Record<string, any>;
 export type CacheOptions = {
     ttl: number;

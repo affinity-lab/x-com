@@ -1,8 +1,8 @@
 import {CacheOptions, CommandFunc, CommandSet, Files} from "./types";
 import {Request, Response} from "express";
-import CommandHandler from "./command-handler";
+import {CommandHandler} from "./command-handler";
 import {xComError} from "./errors";
-import RequestParser from "./request-parser";
+import {RequestParser} from "./request-parser";
 import {ResponseType} from "./response-type";
 import {EventEmitter} from "events";
 import {XComConfig} from "./config";
@@ -26,7 +26,7 @@ type CommandResolverOptions = {
 	eventEmitter: EventEmitter
 }
 
-export default class CommandResolver {
+export class CommandResolver {
 
 	readonly resolvers: TResolvers = {};
 	readonly requestParser: RequestParser;

@@ -26,6 +26,7 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.FileField = void 0;
 const fs = __importStar(require("fs"));
 const path_1 = __importDefault(require("path"));
 class FileField {
@@ -43,5 +44,5 @@ class FileField {
         fs.writeFileSync(path_1.default.resolve("var", to, this.name), this.buffer);
     }
 }
-exports.default = FileField;
+exports.FileField = FileField;
 //# sourceMappingURL=file-field.js.map
