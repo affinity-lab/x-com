@@ -1,0 +1,1 @@
+{"version":3,"file":"response-json.js","sourceRoot":"","sources":["../../src/response/response-json.ts"],"names":[],"mappings":";;AAAA,kDAA6C;AAG7C,MAAM,YAAa,SAAQ,2BAAY;IACjB;IAArB,YAAqB,MAAU;QAAG,KAAK,EAAE,CAAC;QAArB,WAAM,GAAN,MAAM,CAAI;IAAW,CAAC;IAC3C,KAAK,CAAC,IAAI,CAAC,GAAa;QACvB,OAAO,GAAG,CAAC,IAAI,CAAC,IAAI,CAAC,MAAM,CAAC,CAAA;IAC7B,CAAC;CACD"}

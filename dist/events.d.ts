@@ -1,0 +1,3 @@
+export declare enum XCOM_API_EVENTS {
+    REQUEST_ACCEPTED = "REQUEST_ACCEPTED"
+}
