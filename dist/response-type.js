@@ -4,4 +4,4 @@ exports.ResponseType = void 0;
 class ResponseType {
 }
 exports.ResponseType = ResponseType;
-//# sourceMappingURL=responseType.js.map
+//# sourceMappingURL=response-type.js.map

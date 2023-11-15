@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-const responseType_1 = require("../responseType");
-class ResponseJson extends responseType_1.ResponseType {
+const response_type_1 = require("../response-type");
+class ResponseJson extends response_type_1.ResponseType {
     result;
     constructor(result) {
         super();

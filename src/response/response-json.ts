@@ -1,4 +1,4 @@
-import {ResponseType} from "../responseType";
+import {ResponseType} from "../response-type";
 import {Response} from "express";
 
 class ResponseJson extends ResponseType{

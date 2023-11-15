@@ -6,7 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const command_handler_1 = __importDefault(require("./command-handler"));
 const errors_1 = require("./errors");
 const request_parser_1 = __importDefault(require("./request-parser"));
-const responseType_1 = require("./responseType");
+const response_type_1 = require("./response-type");
 const config_1 = require("./config");
 const affinity_util_1 = require("@affinity-lab/affinity-util");
 class CommandResolver {
@@ -83,7 +83,7 @@ class CommandResolver {
         if (cmd === undefined)
             throw errors_1.xComError.notFound(`command not found ${client}.${version}/${command}`); // Command not found
         const result = await cmd.handle(req, res);
-        if (result instanceof responseType_1.ResponseType) {
+        if (result instanceof response_type_1.ResponseType) {
             await result.send(res);
         }
         else {

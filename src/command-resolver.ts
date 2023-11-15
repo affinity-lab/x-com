@@ -3,7 +3,7 @@ import {Request, Response} from "express";
 import CommandHandler from "./command-handler";
 import {xComError} from "./errors";
 import RequestParser from "./request-parser";
-import {ResponseType} from "./responseType";
+import {ResponseType} from "./response-type";
 import {EventEmitter} from "events";
 import {XComConfig} from "./config";
 import {fatalError} from "@affinity-lab/affinity-util";
