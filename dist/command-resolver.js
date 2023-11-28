@@ -31,13 +31,13 @@ class CommandResolver {
                 let func = cmdConfig.func;
                 let authenticated = cmdConfig.authenticated === undefined ? defaultAuthenticated : cmdConfig.authenticated;
                 const command = cmdSetConfig.alias + "." + cmdConfig.alias;
-                const handler = async (args, req, files) => await target[func](args, req, files);
+                const handler = target[func];
                 /* Global clients */
                 for (const client of cmdSetConfig.clients) {
                     if (!Array.isArray(client.version))
                         client.version = [client.version];
                     for (const version of client.version) {
-                        this.addCmd(new command_handler_1.CommandHandler(handler, authenticated, defaultCacheOptions, cmdConfig.sanitize, cmdConfig.validate, client.client, version, command, this));
+                        this.addCmd(new command_handler_1.CommandHandler(handler, authenticated, defaultCacheOptions, cmdConfig.sanitize, cmdConfig.validate, client.client, version, command, this, { "class": target.constructor.name, func }));
                     }
                 }
                 /* Command clients */
@@ -55,7 +55,7 @@ class CommandResolver {
                     if (!Array.isArray(client.version))
                         client.version = [client.version];
                     for (const version of client.version) {
-                        this.addCmd(new command_handler_1.CommandHandler(handler, authenticated, cacheOptions, cmdConfig.sanitize, cmdConfig.validate, client.client, version, command, this));
+                        this.addCmd(new command_handler_1.CommandHandler(handler, authenticated, cacheOptions, cmdConfig.sanitize, cmdConfig.validate, client.client, version, command, this, { "class": target.constructor.name, func }));
                     }
                 }
             }

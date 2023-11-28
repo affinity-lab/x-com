@@ -11,7 +11,20 @@ export declare class CommandHandler {
     readonly version: number;
     readonly command: string;
     readonly commandResolver: CommandResolver;
-    constructor(handler: CommandFunc, authenticated: boolean, cacheOptions: undefined | CacheOptions, sanitize: undefined | ((args: Record<string, any>) => Record<string, any>), validate: undefined | ((args: Record<string, any>) => Record<string, any>), client: IClient, version: number, command: string, commandResolver: CommandResolver);
+    readonly target: {
+        "class": string;
+        func: string;
+    };
+    constructor(handler: CommandFunc, authenticated: boolean, cacheOptions: undefined | CacheOptions, sanitize: undefined | ((args: Record<string, any>) => Record<string, any>), validate: undefined | ((args: Record<string, any>) => Record<string, any>), client: IClient, version: number, command: string, commandResolver: CommandResolver, target: {
+        "class": string;
+        func: string;
+    });
+    toJSON(): {
+        authenticated: boolean;
+        cache: number | undefined;
+        class: string;
+        func: string;
+    };
     handle(req: Request, res: Response): Promise<any>;
     protected getCacheKey(args: Record<string, any>, authenticated?: string): string;
     protected checkApiAccess(req: Request): void;

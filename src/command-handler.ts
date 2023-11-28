@@ -15,10 +15,14 @@ export class CommandHandler {
 		readonly client: IClient,
 		readonly version: number,
 		readonly command: string,
-		readonly commandResolver: CommandResolver
+		readonly commandResolver: CommandResolver,
+		readonly target: { "class": string, func: string }
 	) {
 	}
 
+	toJSON() {
+		return {...this.target, authenticated: this.authenticated, cache: this.cacheOptions?.ttl};
+	}
 
 	async handle(req: Request, res: Response) {
 		this.checkApiAccess(req);

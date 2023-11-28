@@ -11,7 +11,7 @@ CommandHandler>>>;
 type CacheReaderFunc = (handler: () => any, key: string, ttl: number) => Promise<any>;
 type CommandResolverOptions = {
     requestParser: RequestParser;
-    cacheReader: CacheReaderFunc;
+    cacheReader: CacheReaderFunc | undefined;
     eventEmitter: EventEmitter;
 };
 export declare class CommandResolver {

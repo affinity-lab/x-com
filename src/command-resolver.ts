@@ -1,4 +1,4 @@
-import {CacheOptions, CommandFunc, CommandSet, Files} from "./types";
+import {CacheOptions, CommandFunc, CommandSet} from "./types";
 import {Request, Response} from "express";
 import {CommandHandler} from "./command-handler";
 import {xComError} from "./errors";
@@ -7,6 +7,7 @@ import {ResponseType} from "./response-type";
 import {EventEmitter} from "events";
 import {XComConfig} from "./config";
 import {fatalError} from "@affinity-lab/affinity-util";
+import * as fs from "fs";
 
 
 type TResolvers =
@@ -22,7 +23,7 @@ type CacheReaderFunc = (handler: () => any, key: string, ttl: number) => Promise
 
 type CommandResolverOptions = {
 	requestParser: RequestParser,
-	cacheReader: CacheReaderFunc,
+	cacheReader: CacheReaderFunc|undefined,
 	eventEmitter: EventEmitter
 }
 
@@ -56,9 +57,7 @@ export class CommandResolver {
 				let func = cmdConfig.func;
 				let authenticated: boolean = cmdConfig.authenticated === undefined ? defaultAuthenticated : cmdConfig.authenticated;
 				const command = cmdSetConfig.alias + "." + cmdConfig.alias;
-				const handler = async (args: Record<string, any>, req: Request, files: Files) => await (target as {
-					[key: string]: CommandFunc
-				})[func](args, req, files);
+				const handler = (target as { [key: string]: CommandFunc })[func];
 
 
 				/* Global clients */
@@ -74,7 +73,8 @@ export class CommandResolver {
 							client.client,
 							version,
 							command,
-							this
+							this,
+							{"class": target.constructor.name, func}
 						));
 					}
 				}
@@ -101,10 +101,10 @@ export class CommandResolver {
 							client.client,
 							version,
 							command,
-							this
+							this,
+							{"class": target.constructor.name, func}
 						));
 					}
-
 				}
 			}
 		}

@@ -17,7 +17,8 @@ class CommandHandler {
     version;
     command;
     commandResolver;
-    constructor(handler, authenticated, cacheOptions, sanitize, validate, client, version, command, commandResolver) {
+    target;
+    constructor(handler, authenticated, cacheOptions, sanitize, validate, client, version, command, commandResolver, target) {
         this.handler = handler;
         this.authenticated = authenticated;
         this.cacheOptions = cacheOptions;
@@ -27,6 +28,10 @@ class CommandHandler {
         this.version = version;
         this.command = command;
         this.commandResolver = commandResolver;
+        this.target = target;
+    }
+    toJSON() {
+        return { ...this.target, authenticated: this.authenticated, cache: this.cacheOptions?.ttl };
     }
     async handle(req, res) {
         this.checkApiAccess(req);

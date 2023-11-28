@@ -35,4 +35,5 @@ __exportStar(require("./file-field"), exports);
 __exportStar(require("./request-parser"), exports);
 __exportStar(require("./response-type"), exports);
 __exportStar(require("./types"), exports);
+__exportStar(require("./api-gen"), exports);
 //# sourceMappingURL=index.js.map

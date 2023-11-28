@@ -19,3 +19,4 @@ export * from "./file-field";
 export * from "./request-parser";
 export * from "./response-type";
 export * from "./types";
+export * from "./api-gen";
