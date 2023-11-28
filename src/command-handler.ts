@@ -10,18 +10,19 @@ export class CommandHandler {
 		readonly handler: CommandFunc,
 		readonly authenticated: boolean,
 		readonly cacheOptions: undefined | CacheOptions,
-		readonly sanitize: undefined | ((args: Record<string, any>) => Record<string, any>),
+		readonly preprocess: undefined | ((args: Record<string, any>) => Record<string, any> | void),
 		readonly validate: undefined | ((args: Record<string, any>) => Record<string, any>),
 		readonly client: IClient,
 		readonly version: number,
 		readonly command: string,
 		readonly commandResolver: CommandResolver,
-		readonly target: { "class": string, func: string }
+		readonly target: { "class": string, func: string },
+		readonly description?: string
 	) {
 	}
 
 	toJSON() {
-		return {...this.target, authenticated: this.authenticated, cache: this.cacheOptions?.ttl};
+		return {...this.target, authenticated: this.authenticated, cache: this.cacheOptions?.ttl, description: this.description};
 	}
 
 	async handle(req: Request, res: Response) {
@@ -36,7 +37,10 @@ export class CommandHandler {
 
 		this.commandResolver.eventEmitter?.emit(XCOM_API_EVENTS.REQUEST_ACCEPTED, req);
 
-		if (this.sanitize !== undefined) args = this.sanitize(args);
+		if (this.preprocess !== undefined) {
+			const ret = this.preprocess(args);
+			if (ret) args = ret;
+		}
 		if (this.validate !== undefined) args = this.validate(args);
 
 		let handler = async () => await this.handler(args, req, files);

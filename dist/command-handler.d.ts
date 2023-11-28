@@ -5,7 +5,7 @@ export declare class CommandHandler {
     readonly handler: CommandFunc;
     readonly authenticated: boolean;
     readonly cacheOptions: undefined | CacheOptions;
-    readonly sanitize: undefined | ((args: Record<string, any>) => Record<string, any>);
+    readonly preprocess: undefined | ((args: Record<string, any>) => Record<string, any> | void);
     readonly validate: undefined | ((args: Record<string, any>) => Record<string, any>);
     readonly client: IClient;
     readonly version: number;
@@ -15,13 +15,15 @@ export declare class CommandHandler {
         "class": string;
         func: string;
     };
-    constructor(handler: CommandFunc, authenticated: boolean, cacheOptions: undefined | CacheOptions, sanitize: undefined | ((args: Record<string, any>) => Record<string, any>), validate: undefined | ((args: Record<string, any>) => Record<string, any>), client: IClient, version: number, command: string, commandResolver: CommandResolver, target: {
+    readonly description?: string | undefined;
+    constructor(handler: CommandFunc, authenticated: boolean, cacheOptions: undefined | CacheOptions, preprocess: undefined | ((args: Record<string, any>) => Record<string, any> | void), validate: undefined | ((args: Record<string, any>) => Record<string, any>), client: IClient, version: number, command: string, commandResolver: CommandResolver, target: {
         "class": string;
         func: string;
-    });
+    }, description?: string | undefined);
     toJSON(): {
         authenticated: boolean;
         cache: number | undefined;
+        description: string | undefined;
         class: string;
         func: string;
     };

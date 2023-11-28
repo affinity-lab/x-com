@@ -37,8 +37,9 @@ class CommandConfig {
     cache;
     clients = [];
     authenticated;
-    sanitize;
+    preprocess;
     validate;
+    description;
     constructor(func) {
         this.func = func;
         this.alias = func;

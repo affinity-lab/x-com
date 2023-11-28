@@ -2,6 +2,7 @@ export * from "./decorators/command/command";
 export * from "./decorators/command/command-authenticated";
 export * from "./decorators/command/command-cache";
 export * from "./decorators/command/command-client";
+export * from "./decorators/command/command-description";
 export * from "./decorators/command/command-preprocess-args";
 export * from "./decorators/command/command-validate-zod";
 export * from "./decorators/api/x-com";

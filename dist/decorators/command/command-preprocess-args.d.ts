@@ -1,1 +1,1 @@
-export declare const CommandPreprocessArgs: (sanitize: (args: Record<string, any>) => Record<string, any>) => MethodDecorator;
+export declare const CommandPreprocessArgs: (preprocess: (args: Record<string, any>) => Record<string, any> | void) => MethodDecorator;

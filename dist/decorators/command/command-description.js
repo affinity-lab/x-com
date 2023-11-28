@@ -1,15 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.CommandPreprocessArgs = void 0;
+exports.CommandDescription = void 0;
 const config_1 = require("../../config");
-const CommandPreprocessArgs = function (preprocess) {
+const CommandDescription = (description) => {
     return function (target, propertyKey) {
         config_1.XComConfig.set(target.constructor, cmdSet => {
             const cmd = cmdSet.getCmd(propertyKey);
-            cmd.preprocess = preprocess;
+            cmd.description = description;
             return cmdSet;
         });
     };
 };
-exports.CommandPreprocessArgs = CommandPreprocessArgs;
-//# sourceMappingURL=command-preprocess-args.js.map
+exports.CommandDescription = CommandDescription;
+//# sourceMappingURL=command-description.js.map

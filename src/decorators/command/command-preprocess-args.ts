@@ -1,11 +1,11 @@
 import {XComConfig} from "../../config";
 
 
-export const CommandPreprocessArgs = function (sanitize: (args: Record<string, any>) => Record<string, any>): MethodDecorator {
+export const CommandPreprocessArgs = function (preprocess: (args: Record<string, any>) => Record<string, any>|void): MethodDecorator {
 	return function (target: object, propertyKey: string | symbol) {
 		XComConfig.set(target.constructor, cmdSet => {
 			const cmd = cmdSet.getCmd(propertyKey);
-			cmd.sanitize = sanitize;
+			cmd.preprocess = preprocess;
 			return cmdSet;
 		});
 	};

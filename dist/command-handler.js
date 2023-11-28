@@ -11,27 +11,29 @@ class CommandHandler {
     handler;
     authenticated;
     cacheOptions;
-    sanitize;
+    preprocess;
     validate;
     client;
     version;
     command;
     commandResolver;
     target;
-    constructor(handler, authenticated, cacheOptions, sanitize, validate, client, version, command, commandResolver, target) {
+    description;
+    constructor(handler, authenticated, cacheOptions, preprocess, validate, client, version, command, commandResolver, target, description) {
         this.handler = handler;
         this.authenticated = authenticated;
         this.cacheOptions = cacheOptions;
-        this.sanitize = sanitize;
+        this.preprocess = preprocess;
         this.validate = validate;
         this.client = client;
         this.version = version;
         this.command = command;
         this.commandResolver = commandResolver;
         this.target = target;
+        this.description = description;
     }
     toJSON() {
-        return { ...this.target, authenticated: this.authenticated, cache: this.cacheOptions?.ttl };
+        return { ...this.target, authenticated: this.authenticated, cache: this.cacheOptions?.ttl, description: this.description };
     }
     async handle(req, res) {
         this.checkApiAccess(req);
@@ -43,8 +45,11 @@ class CommandHandler {
         req.context.set("authenticated", authenticated);
         req.context.set("request-type", type);
         this.commandResolver.eventEmitter?.emit(events_1.XCOM_API_EVENTS.REQUEST_ACCEPTED, req);
-        if (this.sanitize !== undefined)
-            args = this.sanitize(args);
+        if (this.preprocess !== undefined) {
+            const ret = this.preprocess(args);
+            if (ret)
+                args = ret;
+        }
         if (this.validate !== undefined)
             args = this.validate(args);
         let handler = async () => await this.handler(args, req, files);

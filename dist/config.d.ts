@@ -25,8 +25,9 @@ export declare class CommandConfig {
         cache: boolean | CacheOptions;
     }>;
     authenticated?: boolean;
-    sanitize?: (args: Record<string, any>) => Record<string, any>;
+    preprocess?: (args: Record<string, any>) => Record<string, any> | void;
     validate?: (args: Record<string, any>) => Record<string, any>;
+    description?: string;
     constructor(func: string);
 }
 export {};

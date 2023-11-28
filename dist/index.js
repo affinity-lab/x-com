@@ -18,6 +18,7 @@ __exportStar(require("./decorators/command/command"), exports);
 __exportStar(require("./decorators/command/command-authenticated"), exports);
 __exportStar(require("./decorators/command/command-cache"), exports);
 __exportStar(require("./decorators/command/command-client"), exports);
+__exportStar(require("./decorators/command/command-description"), exports);
 __exportStar(require("./decorators/command/command-preprocess-args"), exports);
 __exportStar(require("./decorators/command/command-validate-zod"), exports);
 __exportStar(require("./decorators/api/x-com"), exports);

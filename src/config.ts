@@ -40,8 +40,9 @@ export class CommandConfig {
 	cache?: CacheOptions;
 	clients: Array<{ client: IClient, version: number | Array<number>, cache: boolean | CacheOptions }> = [];
 	authenticated?: boolean;
-	sanitize?: (args: Record<string, any>) => Record<string, any>;
+	preprocess?: (args: Record<string, any>) => Record<string, any>|void;
 	validate?: (args: Record<string, any>) => Record<string, any>;
+	description?: string;
 
 	constructor(public func: string) {this.alias = func;}
 }

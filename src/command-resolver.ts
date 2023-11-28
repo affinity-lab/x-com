@@ -7,7 +7,6 @@ import {ResponseType} from "./response-type";
 import {EventEmitter} from "events";
 import {XComConfig} from "./config";
 import {fatalError} from "@affinity-lab/affinity-util";
-import * as fs from "fs";
 
 
 type TResolvers =
@@ -23,7 +22,7 @@ type CacheReaderFunc = (handler: () => any, key: string, ttl: number) => Promise
 
 type CommandResolverOptions = {
 	requestParser: RequestParser,
-	cacheReader: CacheReaderFunc|undefined,
+	cacheReader: CacheReaderFunc | undefined,
 	eventEmitter: EventEmitter
 }
 
@@ -68,13 +67,14 @@ export class CommandResolver {
 							handler,
 							authenticated,
 							defaultCacheOptions,
-							cmdConfig.sanitize,
+							cmdConfig.preprocess,
 							cmdConfig.validate,
 							client.client,
 							version,
 							command,
 							this,
-							{"class": target.constructor.name, func}
+							{"class": target.constructor.name, func},
+							cmdConfig.description
 						));
 					}
 				}
@@ -96,13 +96,14 @@ export class CommandResolver {
 							handler,
 							authenticated,
 							cacheOptions,
-							cmdConfig.sanitize,
+							cmdConfig.preprocess,
 							cmdConfig.validate,
 							client.client,
 							version,
 							command,
 							this,
-							{"class": target.constructor.name, func}
+							{"class": target.constructor.name, func},
+							cmdConfig.description
 						));
 					}
 				}
