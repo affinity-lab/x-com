@@ -80,9 +80,9 @@ export function apiGen(src: string, commandResolver: CommandResolver, output: st
 					const command = groups[groupKey][commandKey];
 					let method = "";
 					if (command.args === "" && command.files === "") method = `()=>fetcher('${groupKey}.${commandKey}')`;
-					if (command.args !== "" && command.files !== "") method = "(args:any, files?: Record<string, string[]>)=>fetcher('${groupKey}.${commandKey}', args, files)";
-					if (command.args === "" && command.files !== "") method = "(files?: Record<string, string[]>)=>fetcher('${groupKey}.${commandKey}', undefined, files)";
-					if (command.args !== "" && command.files === "") method = "(args:any)=>fetcher('${groupKey}.${commandKey}', args)";
+					if (command.args !== "" && command.files !== "") method = `(args:any, files?: Record<string, string[]>)=>fetcher('${groupKey}.${commandKey}', args, files)`;
+					if (command.args === "" && command.files !== "") method = `(files?: Record<string, string[]>)=>fetcher('${groupKey}.${commandKey}', undefined, files)`;
+					if (command.args !== "" && command.files === "") method = `(args:any)=>fetcher('${groupKey}.${commandKey}', args)`;
 					api += `\t\t\t${commandKey}: ${method},\n`;
 				}
 				api += `\t\t},\n`;

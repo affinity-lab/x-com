@@ -106,11 +106,11 @@ function apiGen(src, commandResolver, output) {
                     if (command.args === "" && command.files === "")
                         method = `()=>fetcher('${groupKey}.${commandKey}')`;
                     if (command.args !== "" && command.files !== "")
-                        method = "(args:any, files?: Record<string, string[]>)=>fetcher('${groupKey}.${commandKey}', args, files)";
+                        method = `(args:any, files?: Record<string, string[]>)=>fetcher('${groupKey}.${commandKey}', args, files)`;
                     if (command.args === "" && command.files !== "")
-                        method = "(files?: Record<string, string[]>)=>fetcher('${groupKey}.${commandKey}', undefined, files)";
+                        method = `(files?: Record<string, string[]>)=>fetcher('${groupKey}.${commandKey}', undefined, files)`;
                     if (command.args !== "" && command.files === "")
-                        method = "(args:any)=>fetcher('${groupKey}.${commandKey}', args)";
+                        method = `(args:any)=>fetcher('${groupKey}.${commandKey}', args)`;
                     api += `\t\t\t${commandKey}: ${method},\n`;
                 }
                 api += `\t\t},\n`;
