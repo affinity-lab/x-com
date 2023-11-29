@@ -60,7 +60,7 @@ export function apiGen(src: string, commandResolver: CommandResolver, output: st
 				for (const commandKey in groups[groupKey]) {
 					const command = groups[groupKey][commandKey];
 					const args = [];
-					if (command.args) args.push(`args: ${command.args}`);
+					if (command.args !== undefined) args.push(`args: ${command.args}`);
 					const fileArgs = [];
 					if (command.files) {
 						const files = command.files.slice(1, -1).replaceAll(" ", "").split(",");
@@ -79,10 +79,10 @@ export function apiGen(src: string, commandResolver: CommandResolver, output: st
 				for (const commandKey in groups[groupKey]) {
 					const command = groups[groupKey][commandKey];
 					let method = "";
-					if (command.args === "" && command.files === "") method = `()=>fetcher('${groupKey}.${commandKey}')`;
-					if (command.args !== "" && command.files !== "") method = `(args:any, files?: Record<string, string[]>)=>fetcher('${groupKey}.${commandKey}', args, files)`;
-					if (command.args === "" && command.files !== "") method = `(files?: Record<string, string[]>)=>fetcher('${groupKey}.${commandKey}', undefined, files)`;
-					if (command.args !== "" && command.files === "") method = `(args:any)=>fetcher('${groupKey}.${commandKey}', args)`;
+					if (command.args === "undefined" && command.files === "") method = `()=>fetcher('${groupKey}.${commandKey}')`;
+					if (command.args !== "undefined" && command.files !== "") method = `(args:any, files?: Record<string, string[]>)=>fetcher('${groupKey}.${commandKey}', args, files)`;
+					if (command.args === "undefined" && command.files !== "") method = `(files?: Record<string, string[]>)=>fetcher('${groupKey}.${commandKey}', undefined, files)`;
+					if (command.args !== "undefined" && command.files === "") method = `(args:any)=>fetcher('${groupKey}.${commandKey}', args)`;
 					api += `\t\t\t${commandKey}: ${method},\n`;
 				}
 				api += `\t\t},\n`;
