@@ -81,7 +81,7 @@ function apiGen(src, commandResolver, output) {
                 for (const commandKey in groups[groupKey]) {
                     const command = groups[groupKey][commandKey];
                     const args = [];
-                    if (command.args !== undefined)
+                    if (command.args !== "undefined")
                         args.push(`args: ${command.args}`);
                     const fileArgs = [];
                     if (command.files) {

@@ -60,7 +60,7 @@ export function apiGen(src: string, commandResolver: CommandResolver, output: st
 				for (const commandKey in groups[groupKey]) {
 					const command = groups[groupKey][commandKey];
 					const args = [];
-					if (command.args !== undefined) args.push(`args: ${command.args}`);
+					if (command.args !== "undefined") args.push(`args: ${command.args}`);
 					const fileArgs = [];
 					if (command.files) {
 						const files = command.files.slice(1, -1).replaceAll(" ", "").split(",");
