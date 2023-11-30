@@ -96,7 +96,7 @@ function apiGen(src, commandResolver, output) {
                 api += `\t}\n`;
             }
             api += "}\n\n";
-            api += `export function api${clientKey.charAt(0).toUpperCase() + clientKey.slice(1)}${versionKey}Factory(fetcher:(args?:any, files?: any)=>Promise<any>):API_${clientKey.toUpperCase()}_${versionKey}{\n`;
+            api += `export function api${clientKey.charAt(0).toUpperCase() + clientKey.slice(1)}${versionKey}Factory(cmd:string, fetcher:(args?:any, files?: any)=>Promise<any>):API_${clientKey.toUpperCase()}_${versionKey}{\n`;
             api += "\t return {\n";
             for (const groupKey in groups) {
                 api += `\t\t${groupKey}:{\n`;
