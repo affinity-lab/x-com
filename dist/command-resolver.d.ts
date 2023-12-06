@@ -1,4 +1,3 @@
-/// <reference types="node" />
 import { CommandSet } from "./types";
 import { Request, Response } from "express";
 import { CommandHandler } from "./command-handler";
