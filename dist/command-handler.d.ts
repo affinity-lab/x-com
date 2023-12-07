@@ -28,7 +28,7 @@ export declare class CommandHandler {
         func: string;
     };
     handle(req: Request, res: Response): Promise<any>;
-    protected getCacheKey(args: Record<string, any>, authenticated?: string): any;
+    protected getCacheKey(args: Record<string, any>, authenticated?: string): string;
     protected checkApiAccess(req: Request): void;
     protected getAuthenticated(req: Request): string | undefined;
 }

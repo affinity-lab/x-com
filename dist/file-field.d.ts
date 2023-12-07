@@ -1,3 +1,4 @@
+/// <reference types="node" />
 import { Buffer } from "buffer";
 export declare class FileField {
     readonly name: string;

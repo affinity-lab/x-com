@@ -81,7 +81,7 @@ function apiGen(src, commandResolver, output) {
                 for (const commandKey in groups[groupKey]) {
                     const command = groups[groupKey][commandKey];
                     const args = [];
-                    if (command.args !== "undefined")
+                    if (command.args !== "undefined" && command.args)
                         args.push(`args: ${command.args}`);
                     const fileArgs = [];
                     if (command.files) {
@@ -103,13 +103,13 @@ function apiGen(src, commandResolver, output) {
                 for (const commandKey in groups[groupKey]) {
                     const command = groups[groupKey][commandKey];
                     let method = "";
-                    if (command.args === "undefined" && command.files === "")
+                    if (command.args === "undefined" || !command.args && command.files === "")
                         method = `()=>fetcher('${groupKey}.${commandKey}')`;
-                    if (command.args !== "undefined" && command.files !== "")
+                    if (command.args !== "undefined" && command.args && command.files !== "")
                         method = `(args:any, files?: Record<string, string[]>)=>fetcher('${groupKey}.${commandKey}', args, files)`;
-                    if (command.args === "undefined" && command.files !== "")
+                    if (command.args === "undefined" || !command.args && command.files !== "")
                         method = `(files?: Record<string, string[]>)=>fetcher('${groupKey}.${commandKey}', undefined, files)`;
-                    if (command.args !== "undefined" && command.files === "")
+                    if (command.args !== "undefined" && command.args && command.files === "")
                         method = `(args:any)=>fetcher('${groupKey}.${commandKey}', args)`;
                     api += `\t\t\t${commandKey}: ${method},\n`;
                 }
@@ -120,6 +120,7 @@ function apiGen(src, commandResolver, output) {
             fs.writeFileSync(path_1.default.join(output, `api-${clientKey}-${versionKey}.ts`), api);
         }
     }
+    console.log(JSON.stringify(commandMetadata, null, 2));
     fs.writeFileSync(path_1.default.join(output, "api.json"), JSON.stringify(commandMetadata, null, 2));
 }
 exports.apiGen = apiGen;
