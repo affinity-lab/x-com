@@ -93,6 +93,5 @@ export function apiGen(src: string, commandResolver: CommandResolver, output: st
 			fs.writeFileSync(path.join(output, `api-${clientKey}-${versionKey}.ts`), api);
 		}
 	}
-	console.log(JSON.stringify(commandMetadata, null, 2));
 	fs.writeFileSync(path.join(output, "api.json"), JSON.stringify(commandMetadata, null, 2));
 }
