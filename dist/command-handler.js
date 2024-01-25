@@ -8,7 +8,8 @@ const crypto_1 = __importDefault(require("crypto"));
 const errors_1 = require("./errors");
 const events_1 = require("./events");
 class CommandHandler {
-    handler;
+    targetObj;
+    func;
     authenticated;
     cacheOptions;
     preprocess;
@@ -19,8 +20,9 @@ class CommandHandler {
     commandResolver;
     target;
     description;
-    constructor(handler, authenticated, cacheOptions, preprocess, validate, client, version, command, commandResolver, target, description) {
-        this.handler = handler;
+    constructor(targetObj, func, authenticated, cacheOptions, preprocess, validate, client, version, command, commandResolver, target, description) {
+        this.targetObj = targetObj;
+        this.func = func;
         this.authenticated = authenticated;
         this.cacheOptions = cacheOptions;
         this.preprocess = preprocess;
@@ -52,10 +54,9 @@ class CommandHandler {
         }
         if (this.validate !== undefined)
             args = this.validate(args);
-        let handler = async () => await this.handler(args, req, files);
         const result = (this.commandResolver.cacheReader === undefined || this.cacheOptions === undefined || this.cacheOptions.ttl < 1)
-            ? await handler()
-            : await this.commandResolver.cacheReader(handler, this.getCacheKey(args, authenticated), this.cacheOptions.ttl);
+            ? await this.targetObj[this.func](args, req, files)
+            : await this.commandResolver.cacheReader(async () => await this.targetObj[this.func](args, req, files), this.getCacheKey(args, authenticated), this.cacheOptions.ttl);
         // when we got result, we set the response cache control header
         if (this.cacheOptions?.cttl)
             res.header("cache-control", `max-age:${this.cacheOptions.cttl}`);

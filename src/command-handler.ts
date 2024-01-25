@@ -1,4 +1,4 @@
-import {CacheOptions, CommandFunc, IClient} from "./types";
+import {CacheOptions, CommandFunc, Files, IClient} from "./types";
 import {Request, Response} from "express";
 import crypto from "crypto";
 import {xComError} from "./errors";
@@ -7,7 +7,8 @@ import {XCOM_API_EVENTS} from "./events";
 
 export class CommandHandler {
 	constructor(
-		readonly handler: CommandFunc,
+		readonly targetObj: {[p:string]: (args: Record<string, any>, req: Request, files: Files) => Promise<any>},
+		readonly func: string,
 		readonly authenticated: boolean,
 		readonly cacheOptions: undefined | CacheOptions,
 		readonly preprocess: undefined | ((args: Record<string, any>) => Record<string, any> | void),
@@ -43,12 +44,9 @@ export class CommandHandler {
 		}
 		if (this.validate !== undefined) args = this.validate(args);
 
-		let handler = async () => await this.handler(args, req, files);
-
-
 		const result = (this.commandResolver.cacheReader === undefined || this.cacheOptions === undefined || this.cacheOptions.ttl < 1)
-					   ? await handler()
-					   : await this.commandResolver.cacheReader(handler, this.getCacheKey(args, authenticated), this.cacheOptions.ttl);
+			? await this.targetObj[this.func](args, req, files)
+			: await this.commandResolver.cacheReader(async () => await this.targetObj[this.func](args, req, files), this.getCacheKey(args, authenticated), this.cacheOptions.ttl);
 		// when we got result, we set the response cache control header
 		if (this.cacheOptions?.cttl) res.header("cache-control", `max-age:${this.cacheOptions.cttl}`);
 		return result;

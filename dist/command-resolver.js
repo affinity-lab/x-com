@@ -37,7 +37,7 @@ class CommandResolver {
                     if (!Array.isArray(client.version))
                         client.version = [client.version];
                     for (const version of client.version) {
-                        this.addCmd(new command_handler_1.CommandHandler(handler, authenticated, defaultCacheOptions, cmdConfig.preprocess, cmdConfig.validate, client.client, version, command, this, { "class": target.constructor.name, func }, cmdConfig.description));
+                        this.addCmd(new command_handler_1.CommandHandler(target, func, authenticated, defaultCacheOptions, cmdConfig.preprocess, cmdConfig.validate, client.client, version, command, this, { "class": target.constructor.name, func }, cmdConfig.description));
                     }
                 }
                 /* Command clients */
@@ -55,7 +55,7 @@ class CommandResolver {
                     if (!Array.isArray(client.version))
                         client.version = [client.version];
                     for (const version of client.version) {
-                        this.addCmd(new command_handler_1.CommandHandler(handler, authenticated, cacheOptions, cmdConfig.preprocess, cmdConfig.validate, client.client, version, command, this, { "class": target.constructor.name, func }, cmdConfig.description));
+                        this.addCmd(new command_handler_1.CommandHandler(target, func, authenticated, cacheOptions, cmdConfig.preprocess, cmdConfig.validate, client.client, version, command, this, { "class": target.constructor.name, func }, cmdConfig.description));
                     }
                 }
             }

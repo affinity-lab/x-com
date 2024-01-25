@@ -12,11 +12,12 @@ export declare class XComConfig {
     constructor(target: Constructor);
     private static get;
     static set(target: Constructor, callback: (cmdSet: XComConfig) => XComConfig): void;
-    getCmd(name: string | symbol): CommandConfig;
+    getCmd(name: string | symbol, c: string): CommandConfig;
     static getConfigsFromCommandSets(commands: {}[]): any[];
 }
 export declare class CommandConfig {
     func: string;
+    c: string;
     alias: string;
     cache?: CacheOptions;
     clients: Array<{
@@ -28,6 +29,6 @@ export declare class CommandConfig {
     preprocess?: (args: Record<string, any>) => Record<string, any> | void;
     validate?: (args: Record<string, any>) => Record<string, any>;
     description?: string;
-    constructor(func: string);
+    constructor(func: string, c: string);
 }
 export {};

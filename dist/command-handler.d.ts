@@ -1,8 +1,11 @@
-import { CacheOptions, CommandFunc, IClient } from "./types";
+import { CacheOptions, Files, IClient } from "./types";
 import { Request, Response } from "express";
 import { CommandResolver } from "./command-resolver";
 export declare class CommandHandler {
-    readonly handler: CommandFunc;
+    readonly targetObj: {
+        [p: string]: (args: Record<string, any>, req: Request, files: Files) => Promise<any>;
+    };
+    readonly func: string;
     readonly authenticated: boolean;
     readonly cacheOptions: undefined | CacheOptions;
     readonly preprocess: undefined | ((args: Record<string, any>) => Record<string, any> | void);
@@ -16,7 +19,9 @@ export declare class CommandHandler {
         func: string;
     };
     readonly description?: string | undefined;
-    constructor(handler: CommandFunc, authenticated: boolean, cacheOptions: undefined | CacheOptions, preprocess: undefined | ((args: Record<string, any>) => Record<string, any> | void), validate: undefined | ((args: Record<string, any>) => Record<string, any>), client: IClient, version: number, command: string, commandResolver: CommandResolver, target: {
+    constructor(targetObj: {
+        [p: string]: (args: Record<string, any>, req: Request, files: Files) => Promise<any>;
+    }, func: string, authenticated: boolean, cacheOptions: undefined | CacheOptions, preprocess: undefined | ((args: Record<string, any>) => Record<string, any> | void), validate: undefined | ((args: Record<string, any>) => Record<string, any>), client: IClient, version: number, command: string, commandResolver: CommandResolver, target: {
         "class": string;
         func: string;
     }, description?: string | undefined);

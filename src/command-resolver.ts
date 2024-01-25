@@ -1,4 +1,4 @@
-import {CacheOptions, CommandFunc, CommandSet} from "./types";
+import {CacheOptions, CommandFunc, CommandSet, Files} from "./types";
 import {Request, Response} from "express";
 import {CommandHandler} from "./command-handler";
 import {xComError} from "./errors";
@@ -52,7 +52,7 @@ export class CommandResolver {
 				const cmdConfig = cmdSetConfig.cmdConfigs[cmdKey];
 
 				const defaultCacheOptions = (cmdConfig.cache === undefined ? undefined : cmdConfig.cache);
-				const target = new (cmdSetConfig.target as new () => CommandSet)();
+				const target: {[p:string]: (args: Record<string, any>, req: Request, files: Files) => Promise<any>} = new (cmdSetConfig.target as new () => {})();
 				let func = cmdConfig.func;
 				let authenticated: boolean = cmdConfig.authenticated === undefined ? defaultAuthenticated : cmdConfig.authenticated;
 				const command = cmdSetConfig.alias + "." + cmdConfig.alias;
@@ -64,7 +64,8 @@ export class CommandResolver {
 					if (!Array.isArray(client.version)) client.version = [client.version];
 					for (const version of client.version) {
 						this.addCmd(new CommandHandler(
-							handler,
+							target,
+							func,
 							authenticated,
 							defaultCacheOptions,
 							cmdConfig.preprocess,
@@ -93,7 +94,8 @@ export class CommandResolver {
 					if (!Array.isArray(client.version)) client.version = [client.version];
 					for (const version of client.version) {
 						this.addCmd(new CommandHandler(
-							handler,
+							target,
+							func,
 							authenticated,
 							cacheOptions,
 							cmdConfig.preprocess,
