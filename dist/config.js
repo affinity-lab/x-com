@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommandConfig = exports.XComConfig = void 0;
-const Reflektor_1 = require("./Reflektor");
+const reflektor_1 = require("./reflektor");
 class XComConfig {
-    static reflektor = new Reflektor_1.Reflektor();
+    static reflektor = new reflektor_1.Reflektor();
     alias;
     clients = [];
     authenticated = false;

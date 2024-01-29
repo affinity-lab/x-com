@@ -31,7 +31,6 @@ class CommandResolver {
                 let func = cmdConfig.func;
                 let authenticated = cmdConfig.authenticated === undefined ? defaultAuthenticated : cmdConfig.authenticated;
                 const command = cmdSetConfig.alias + "." + cmdConfig.alias;
-                const handler = target[func];
                 /* Global clients */
                 for (const client of cmdSetConfig.clients) {
                     if (!Array.isArray(client.version))

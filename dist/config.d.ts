@@ -1,5 +1,5 @@
 import { CacheOptions, IClient } from "./types";
-import { Reflektor } from "./Reflektor";
+import { Reflektor } from "./reflektor";
 type Constructor = (new () => Object) | Function;
 export declare class XComConfig {
     static reflektor: Reflektor<XComConfig>;
