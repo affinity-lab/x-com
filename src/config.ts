@@ -1,44 +1,33 @@
 import {CacheOptions, IClient} from "./types";
+import {Reflektor} from "./Reflektor";
 
 type Constructor = (new () => Object) | Function;
 
 export class XComConfig {
+	static reflektor = new Reflektor<XComConfig>();
 	alias: string;
 	clients: Array<{ client: IClient, version: number | Array<number> }> = [];
 	authenticated: boolean = false;
 
 	cmdConfigs: Record<string, CommandConfig> = {};
 
-	constructor(public target: Constructor) {
+	constructor(target: Constructor) {
 		this.alias = target.name;
 	}
 
-	private static get(target: Constructor): XComConfig {
-		if (Reflect.has(target, "cmd-set")) {
-			let t = Reflect.get(target, "cmd-set")
-			if (t.name != target.name) {
-				t.name = target.name
-				t.target = target
-			}
-			return t;
-		}
-		else return new XComConfig(target);
+	static get(target: Constructor): XComConfig {
+		let entry = this.reflektor.get(target, () => new XComConfig(target));
+		return entry.value;
 	};
 
 	static set(target: Constructor, callback: (cmdSet: XComConfig) => XComConfig) {
-		const value = callback(this.get(target));
-		Reflect.set(target, "cmd-set", value);
+		callback(this.get(target));
 	}
 
-	getCmd(name: string | symbol, c: string) {
-		if (this.cmdConfigs.hasOwnProperty(name)) {
-			if(this.cmdConfigs[name.toString()].c != c) this.cmdConfigs[name.toString()].c = c;
-		} else this.cmdConfigs[name.toString()] = new CommandConfig(name.toString(), c);
-		return this.cmdConfigs[name.toString()]
-	}
-
-	static getConfigsFromCommandSets(commands: {}[]) {
-		return commands.map(command => Reflect.get(command, "cmd-set"));
+	getCmd(name: string | symbol) {
+		return this.cmdConfigs.hasOwnProperty(name)
+			? this.cmdConfigs[name.toString()]
+			: this.cmdConfigs[name.toString()] = new CommandConfig(name.toString());
 	}
 }
 
@@ -51,5 +40,5 @@ export class CommandConfig {
 	validate?: (args: Record<string, any>) => Record<string, any>;
 	description?: string;
 
-	constructor(public func: string, public c: string) {this.alias = func;}
+	constructor(public func: string) {this.alias = func;}
 }

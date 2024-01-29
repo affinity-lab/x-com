@@ -1,7 +1,8 @@
 import { CacheOptions, IClient } from "./types";
+import { Reflektor } from "./Reflektor";
 type Constructor = (new () => Object) | Function;
 export declare class XComConfig {
-    target: Constructor;
+    static reflektor: Reflektor<XComConfig>;
     alias: string;
     clients: Array<{
         client: IClient;
@@ -10,14 +11,12 @@ export declare class XComConfig {
     authenticated: boolean;
     cmdConfigs: Record<string, CommandConfig>;
     constructor(target: Constructor);
-    private static get;
+    static get(target: Constructor): XComConfig;
     static set(target: Constructor, callback: (cmdSet: XComConfig) => XComConfig): void;
-    getCmd(name: string | symbol, c: string): CommandConfig;
-    static getConfigsFromCommandSets(commands: {}[]): any[];
+    getCmd(name: string | symbol): CommandConfig;
 }
 export declare class CommandConfig {
     func: string;
-    c: string;
     alias: string;
     cache?: CacheOptions;
     clients: Array<{
@@ -29,6 +28,6 @@ export declare class CommandConfig {
     preprocess?: (args: Record<string, any>) => Record<string, any> | void;
     validate?: (args: Record<string, any>) => Record<string, any>;
     description?: string;
-    constructor(func: string, c: string);
+    constructor(func: string);
 }
 export {};

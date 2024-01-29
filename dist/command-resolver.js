@@ -21,13 +21,13 @@ class CommandResolver {
         this.parse();
     }
     parse() {
-        const cmdSetsConfig = config_1.XComConfig.getConfigsFromCommandSets(this.commandSets);
-        for (const cmdSetConfig of cmdSetsConfig) {
+        for (const targetClass of this.commandSets) {
+            const cmdSetConfig = config_1.XComConfig.get(targetClass);
             const defaultAuthenticated = (cmdSetConfig.authenticated === undefined ? false : cmdSetConfig.authenticated);
             for (const cmdKey in cmdSetConfig.cmdConfigs) {
                 const cmdConfig = cmdSetConfig.cmdConfigs[cmdKey];
                 const defaultCacheOptions = (cmdConfig.cache === undefined ? undefined : cmdConfig.cache);
-                const target = new cmdSetConfig.target();
+                const target = new targetClass();
                 let func = cmdConfig.func;
                 let authenticated = cmdConfig.authenticated === undefined ? defaultAuthenticated : cmdConfig.authenticated;
                 const command = cmdSetConfig.alias + "." + cmdConfig.alias;

@@ -6,7 +6,7 @@ const affinity_util_1 = require("@affinity-lab/affinity-util");
 const CommandValidateZod = function (zodPattern) {
     return function (target, propertyKey) {
         config_1.XComConfig.set(target.constructor, cmdSet => {
-            const cmd = cmdSet.getCmd(propertyKey, target.constructor.name);
+            const cmd = cmdSet.getCmd(propertyKey);
             cmd.validate = (args) => {
                 let parsed = zodPattern.safeParse(args);
                 if (!parsed.success)

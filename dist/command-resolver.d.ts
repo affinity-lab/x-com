@@ -1,5 +1,4 @@
 /// <reference types="node" />
-import { CommandSet } from "./types";
 import { Request, Response } from "express";
 import { CommandHandler } from "./command-handler";
 import { RequestParser } from "./request-parser";
@@ -20,7 +19,7 @@ export declare class CommandResolver {
     readonly requestParser: RequestParser;
     readonly cacheReader: CacheReaderFunc | undefined;
     readonly eventEmitter: EventEmitter | undefined;
-    constructor(commandSets: Array<CommandSet>, options?: Partial<CommandResolverOptions>);
+    constructor(commandSets: Array<typeof Object>, options?: Partial<CommandResolverOptions>);
     protected parse(): void;
     protected addCmd(cmd: CommandHandler): void;
     handle(client: string, version: number, command: string, req: Request, res: Response): Promise<void>;

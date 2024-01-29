@@ -1,4 +1,4 @@
-import {CacheOptions, CommandFunc, CommandSet, Files} from "./types";
+import {CacheOptions, Files} from "./types";
 import {Request, Response} from "express";
 import {CommandHandler} from "./command-handler";
 import {xComError} from "./errors";
@@ -34,7 +34,7 @@ export class CommandResolver {
 	readonly eventEmitter: EventEmitter | undefined;
 
 	constructor(
-		private commandSets: Array<CommandSet>,
+		private commandSets: Array<typeof Object>,
 		options: Partial<CommandResolverOptions> = {}
 	) {
 		this.requestParser = options.requestParser === undefined ? new RequestParser() : options.requestParser;
@@ -44,20 +44,19 @@ export class CommandResolver {
 	}
 
 	protected parse() {
-		const cmdSetsConfig: Array<XComConfig> = XComConfig.getConfigsFromCommandSets(this.commandSets);
-		for (const cmdSetConfig of cmdSetsConfig) {
+		for (const targetClass of this.commandSets) {
+			const cmdSetConfig = XComConfig.get(targetClass);
+
 			const defaultAuthenticated = (cmdSetConfig.authenticated === undefined ? false : cmdSetConfig.authenticated);
 			for (const cmdKey in cmdSetConfig.cmdConfigs) {
 
 				const cmdConfig = cmdSetConfig.cmdConfigs[cmdKey];
 
 				const defaultCacheOptions = (cmdConfig.cache === undefined ? undefined : cmdConfig.cache);
-				const target: {[p:string]: (args: Record<string, any>, req: Request, files: Files) => Promise<any>} = new (cmdSetConfig.target as new () => {})();
+				const target: {[p:string]: (args: Record<string, any>, req: Request, files: Files) => Promise<any>} = new (targetClass as new () => {})();
 				let func = cmdConfig.func;
 				let authenticated: boolean = cmdConfig.authenticated === undefined ? defaultAuthenticated : cmdConfig.authenticated;
 				const command = cmdSetConfig.alias + "." + cmdConfig.alias;
-				const handler = (target as { [key: string]: CommandFunc })[func];
-
 
 				/* Global clients */
 				for (const client of cmdSetConfig.clients) {

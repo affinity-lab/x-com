@@ -1,50 +1,33 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommandConfig = exports.XComConfig = void 0;
+const Reflektor_1 = require("./Reflektor");
 class XComConfig {
-    target;
+    static reflektor = new Reflektor_1.Reflektor();
     alias;
     clients = [];
     authenticated = false;
     cmdConfigs = {};
     constructor(target) {
-        this.target = target;
         this.alias = target.name;
     }
     static get(target) {
-        if (Reflect.has(target, "cmd-set")) {
-            let t = Reflect.get(target, "cmd-set");
-            if (t.name != target.name) {
-                t.name = target.name;
-                t.target = target;
-            }
-            return t;
-        }
-        else
-            return new XComConfig(target);
+        let entry = this.reflektor.get(target, () => new XComConfig(target));
+        return entry.value;
     }
     ;
     static set(target, callback) {
-        const value = callback(this.get(target));
-        Reflect.set(target, "cmd-set", value);
+        callback(this.get(target));
     }
-    getCmd(name, c) {
-        if (this.cmdConfigs.hasOwnProperty(name)) {
-            if (this.cmdConfigs[name.toString()].c != c)
-                this.cmdConfigs[name.toString()].c = c;
-        }
-        else
-            this.cmdConfigs[name.toString()] = new CommandConfig(name.toString(), c);
-        return this.cmdConfigs[name.toString()];
-    }
-    static getConfigsFromCommandSets(commands) {
-        return commands.map(command => Reflect.get(command, "cmd-set"));
+    getCmd(name) {
+        return this.cmdConfigs.hasOwnProperty(name)
+            ? this.cmdConfigs[name.toString()]
+            : this.cmdConfigs[name.toString()] = new CommandConfig(name.toString());
     }
 }
 exports.XComConfig = XComConfig;
 class CommandConfig {
     func;
-    c;
     alias;
     cache;
     clients = [];
@@ -52,9 +35,8 @@ class CommandConfig {
     preprocess;
     validate;
     description;
-    constructor(func, c) {
+    constructor(func) {
         this.func = func;
-        this.c = c;
         this.alias = func;
     }
 }

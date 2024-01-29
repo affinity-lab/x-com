@@ -5,7 +5,7 @@ const config_1 = require("../../config");
 const CommandCache = (cache) => {
     return function (target, propertyKey) {
         config_1.XComConfig.set(target.constructor, cmdSet => {
-            const cmd = cmdSet.getCmd(propertyKey, target.constructor.name);
+            const cmd = cmdSet.getCmd(propertyKey);
             cmd.cache = cache;
             return cmdSet;
         });
