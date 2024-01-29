@@ -1,6 +1,6 @@
 {
 	"name": "@affinity-lab/x-com",
-	"version": "0.0.17",
+	"version": "0.0.18",
 	"author": "Affinity Lab",
 	"main": "dist/index",
 	"scripts": {

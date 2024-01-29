@@ -14,6 +14,7 @@ export class Reflektor<T> {
 			let parentEntry = this.get(parent);
 			if(parentEntry) {
 				let clone = structuredClone(parentEntry.value);
+				Object.setPrototypeOf(clone, Object.getPrototypeOf(parentEntry.value));
 				// @ts-ignore
 				clone.alias = target.name;
 				return this.set(target, clone);
