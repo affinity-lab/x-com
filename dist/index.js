@@ -28,7 +28,7 @@ __exportStar(require("./response/response-download"), exports);
 __exportStar(require("./response/response-json"), exports);
 __exportStar(require("./command-handler"), exports);
 __exportStar(require("./command-resolver"), exports);
-__exportStar(require("./config"), exports);
+__exportStar(require("./x-com-cfg"), exports);
 __exportStar(require("./errors"), exports);
 __exportStar(require("./events"), exports);
 __exportStar(require("./extend-express-request"), exports);

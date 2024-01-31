@@ -20,7 +20,6 @@ export declare class CommandResolver {
     readonly cacheReader: CacheReaderFunc | undefined;
     readonly eventEmitter: EventEmitter | undefined;
     constructor(commandSets: Array<typeof Object>, options?: Partial<CommandResolverOptions>);
-    protected parse(): void;
     protected addCmd(cmd: CommandHandler): void;
     handle(client: string, version: number, command: string, req: Request, res: Response): Promise<void>;
 }

@@ -12,7 +12,7 @@ export * from "./response/response-download";
 export * from "./response/response-json";
 export * from "./command-handler";
 export * from "./command-resolver";
-export * from "./config";
+export * from "./x-com-cfg";
 export * from "./errors";
 export * from "./events";
 export * from "./extend-express-request";

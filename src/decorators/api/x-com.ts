@@ -1,10 +1,7 @@
-import {XComConfig} from "../../config";
+import {xcomCfg} from "../../x-com-cfg";
 
 export const XCom = (alias?: string): ClassDecorator => {
 	return function (target) {
-		XComConfig.set(target, cmdSet => {
-			if (alias) cmdSet.alias = alias;
-			return cmdSet;
-		});
+		xcomCfg.metadataStore.get(target, true).set("xcom.alias", alias ? alias : target.name);
 	};
 };

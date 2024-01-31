@@ -1,15 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.Command = void 0;
-const config_1 = require("../../config");
+const x_com_cfg_1 = require("../../x-com-cfg");
 const Command = (alias) => {
     return function (target, propertyKey) {
-        config_1.XComConfig.set(target.constructor, cmdSet => {
-            const cmd = cmdSet.getCmd(propertyKey);
-            if (alias)
-                cmd.alias = alias;
-            return cmdSet;
-        });
+        x_com_cfg_1.xcomCfg.metadataStore.get(target.constructor, true).set(["command", propertyKey.toString(), "alias"], alias || propertyKey.toString());
     };
 };
 exports.Command = Command;

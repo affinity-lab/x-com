@@ -1,12 +1,11 @@
+import {xcomCfg} from "../../x-com-cfg";
 import {CacheOptions} from "../../types";
-import {XComConfig} from "../../config";
 
 export const CommandCache = (cache: CacheOptions): MethodDecorator => {
 	return function (target, propertyKey) {
-		XComConfig.set(target.constructor, cmdSet => {
-			const cmd = cmdSet.getCmd(propertyKey);
-			cmd.cache = cache;
-			return cmdSet;
-		});
+		xcomCfg.metadataStore.get(target.constructor, true).set(
+			["command", propertyKey.toString(), "cache"],
+			cache
+		);
 	};
 };

@@ -1,19 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.CommandValidateZod = void 0;
-const config_1 = require("../../config");
 const affinity_util_1 = require("@affinity-lab/affinity-util");
+const x_com_cfg_1 = require("../../x-com-cfg");
 const CommandValidateZod = function (zodPattern) {
     return function (target, propertyKey) {
-        config_1.XComConfig.set(target.constructor, cmdSet => {
-            const cmd = cmdSet.getCmd(propertyKey);
-            cmd.validate = (args) => {
-                let parsed = zodPattern.safeParse(args);
-                if (!parsed.success)
-                    throw new affinity_util_1.ExtendedError("Validation extended-error", "VALIDATION_ERROR", parsed.error.issues);
-                return parsed.data;
-            };
-            return cmdSet;
+        x_com_cfg_1.xcomCfg.metadataStore.get(target.constructor, true).set(["command", propertyKey.toString(), "validator"], (args) => {
+            let parsed = zodPattern.safeParse(args);
+            if (!parsed.success)
+                throw new affinity_util_1.ExtendedError("Validation extended-error", "VALIDATION_ERROR", parsed.error.issues);
+            return parsed.data;
         });
     };
 };

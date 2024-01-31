@@ -1,12 +1,11 @@
-import {CacheOptions, Files} from "./types";
 import {Request, Response} from "express";
 import {CommandHandler} from "./command-handler";
 import {xComError} from "./errors";
 import {RequestParser} from "./request-parser";
 import {ResponseType} from "./response-type";
 import {EventEmitter} from "events";
-import {XComConfig} from "./config";
 import {fatalError} from "@affinity-lab/affinity-util";
+import {xcomCfg} from "./x-com-cfg";
 
 
 type TResolvers =
@@ -40,74 +39,10 @@ export class CommandResolver {
 		this.requestParser = options.requestParser === undefined ? new RequestParser() : options.requestParser;
 		this.cacheReader = options.cacheReader;
 		this.eventEmitter = options.eventEmitter;
-		this.parse();
-	}
-
-	protected parse() {
 		for (const targetClass of this.commandSets) {
-			const cmdSetConfig = XComConfig.get(targetClass);
-
-			const defaultAuthenticated = (cmdSetConfig.authenticated === undefined ? false : cmdSetConfig.authenticated);
-			for (const cmdKey in cmdSetConfig.cmdConfigs) {
-
-				const cmdConfig = cmdSetConfig.cmdConfigs[cmdKey];
-
-				const defaultCacheOptions = (cmdConfig.cache === undefined ? undefined : cmdConfig.cache);
-				const target: {[p:string]: (args: Record<string, any>, req: Request, files: Files) => Promise<any>} = new (targetClass as new () => {})();
-				let func = cmdConfig.func;
-				let authenticated: boolean = cmdConfig.authenticated === undefined ? defaultAuthenticated : cmdConfig.authenticated;
-				const command = cmdSetConfig.alias + "." + cmdConfig.alias;
-
-				/* Global clients */
-				for (const client of cmdSetConfig.clients) {
-					if (!Array.isArray(client.version)) client.version = [client.version];
-					for (const version of client.version) {
-						this.addCmd(new CommandHandler(
-							target,
-							func,
-							authenticated,
-							defaultCacheOptions,
-							cmdConfig.preprocess,
-							cmdConfig.validate,
-							client.client,
-							version,
-							command,
-							this,
-							{"class": target.constructor.name, func},
-							cmdConfig.description
-						));
-					}
-				}
-
-				/* Command clients */
-				for (const client of cmdConfig.clients) {
-					let cacheOptions: undefined | CacheOptions;
-					if (client.cache === false) {
-						cacheOptions = undefined;
-					} else if (client.cache === true) {
-						cacheOptions = defaultCacheOptions;
-					} else {
-						cacheOptions = client.cache;
-					}
-
-					if (!Array.isArray(client.version)) client.version = [client.version];
-					for (const version of client.version) {
-						this.addCmd(new CommandHandler(
-							target,
-							func,
-							authenticated,
-							cacheOptions,
-							cmdConfig.preprocess,
-							cmdConfig.validate,
-							client.client,
-							version,
-							command,
-							this,
-							{"class": target.constructor.name, func},
-							cmdConfig.description
-						));
-					}
-				}
+			const handlers = xcomCfg.parseXComMeta(targetClass, this);
+			for (const handler of handlers) {
+				this.addCmd(handler);
 			}
 		}
 	}

@@ -1,10 +1,7 @@
-import {XComConfig} from "../../config";
+import {xcomCfg} from "../../x-com-cfg";
 
 export const XComAuthenticated = (status: boolean = true): ClassDecorator => {
 	return function (target) {
-		XComConfig.set(target, cmdSet => {
-			cmdSet.authenticated = status;
-			return cmdSet;
-		});
+		xcomCfg.metadataStore.get(target, true).set("xcom.authenticated", status);
 	};
 };

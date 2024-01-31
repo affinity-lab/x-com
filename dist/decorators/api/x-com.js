@@ -1,14 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.XCom = void 0;
-const config_1 = require("../../config");
+const x_com_cfg_1 = require("../../x-com-cfg");
 const XCom = (alias) => {
     return function (target) {
-        config_1.XComConfig.set(target, cmdSet => {
-            if (alias)
-                cmdSet.alias = alias;
-            return cmdSet;
-        });
+        x_com_cfg_1.xcomCfg.metadataStore.get(target, true).set("xcom.alias", alias ? alias : target.name);
     };
 };
 exports.XCom = XCom;
