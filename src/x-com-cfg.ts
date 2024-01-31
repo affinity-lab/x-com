@@ -74,6 +74,7 @@ class XComCfg {
 					{class: target.name, func},
 					commandCfg.description
 				);
+				commandHandlers.push(handler);
 			}
 		}
 
