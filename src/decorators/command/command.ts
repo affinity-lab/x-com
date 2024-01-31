@@ -1,4 +1,4 @@
-import {xcomCfg} from "../../x-com-cfg";
+import {xcomCfg} from "./../../x-com-cfg";
 
 export const Command = (alias?: string): MethodDecorator => {
 	return function (target, propertyKey) {
