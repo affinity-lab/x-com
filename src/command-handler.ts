@@ -38,13 +38,13 @@ export class CommandHandler {
 
 		this.commandResolver.eventEmitter?.emit(XCOM_API_EVENTS.REQUEST_ACCEPTED, req);
 
-		if (this.preprocess !== undefined) {
+		if (this.preprocess !== undefined) {1
 			const ret = this.preprocess(args);
 			if (ret) args = ret;
 		}
 		if (this.validate !== undefined) args = this.validate(args);
 
-		const result = (this.commandResolver.cacheReader === undefined || this.cacheOptions === undefined || this.cacheOptions.ttl < 1)
+		const result = (this.commandResolver.cacheReader === undefined || this.cacheOptions === undefined || this.cacheOptions.ttl === undefined || this.cacheOptions.ttl < 1)
 			? await this.targetObj[this.func](args, req, files)
 			: await this.commandResolver.cacheReader(async () => await this.targetObj[this.func](args, req, files), this.getCacheKey(args, authenticated), this.cacheOptions.ttl);
 		// when we got result, we set the response cache control header
