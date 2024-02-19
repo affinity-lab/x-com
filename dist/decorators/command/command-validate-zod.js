@@ -8,7 +8,7 @@ const CommandValidateZod = function (zodPattern) {
         x_com_cfg_1.xcomCfg.metadataStore.get(target.constructor, true).set(["command", propertyKey.toString(), "validator"], (args) => {
             let parsed = zodPattern.safeParse(args);
             if (!parsed.success)
-                throw new affinity_util_1.ExtendedError("Validation extended-error", "VALIDATION_ERROR", parsed.error.issues);
+                throw new affinity_util_1.ExtendedError("Validation extended-error", "VALIDATION_ERROR", parsed.error.issues, 400);
             return parsed.data;
         });
     };

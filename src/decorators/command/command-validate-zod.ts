@@ -8,7 +8,7 @@ export const CommandValidateZod = function (zodPattern: z.ZodObject<any>): Metho
 			["command", propertyKey.toString(), "validator"],
 			(args: Record<string, any>) => {
 				let parsed = zodPattern.safeParse(args);
-				if (!parsed.success) throw new ExtendedError("Validation extended-error", "VALIDATION_ERROR", parsed.error.issues);
+				if (!parsed.success) throw new ExtendedError("Validation extended-error", "VALIDATION_ERROR", parsed.error.issues, 400);
 				return parsed.data;
 			}
 		);
