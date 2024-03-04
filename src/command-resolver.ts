@@ -4,7 +4,7 @@ import {xComError} from "./errors";
 import {RequestParser} from "./request-parser";
 import {ResponseType} from "./response-type";
 import {EventEmitter} from "events";
-import {fatalError} from "@affinity-lab/affinity-util";
+import {fatalError} from "@affinity-lab/util";
 import {xcomCfg} from "./x-com-cfg";
 
 

@@ -1,4 +1,4 @@
-import {createErrorData, preprocessErrorTree} from "@affinity-lab/affinity-util";
+import {createErrorData, preprocessErrorTree} from "@affinity-lab/util";
 
 export const xComError = {
 	notFound: (message: string) => createErrorData(message, undefined, 404),

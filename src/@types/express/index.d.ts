@@ -1,6 +1,3 @@
-import {SentFile} from "@affinity-lab/graphane";
-
-
 export {};
 
 declare global {
@@ -10,7 +7,7 @@ declare global {
 			context: Map<string, any>;
 			getHeader: (header: string) => string | undefined;
 			getNumHeader: (header: string) => number | undefined;
-			files?: Record<string, SentFile>;
+			files?: Record<string, any>;
 			hasHeader(header: string): boolean;
 		}
 	}

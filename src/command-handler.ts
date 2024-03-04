@@ -1,4 +1,4 @@
-import {CacheOptions, CommandFunc, Files, IClient} from "./types";
+import {CacheOptions, Files, IClient} from "./types";
 import {Request, Response} from "express";
 import crypto from "crypto";
 import {xComError} from "./errors";

@@ -1,17 +1,18 @@
 {
 	"name": "@affinity-lab/x-com",
-	"version": "0.0.26",
+	"version": "0.0.28",
 	"author": "Affinity Lab",
 	"main": "dist/index",
 	"scripts": {
 		"build": "npx tsc && npm version patch --no-git-tag-version",
-		"prebuild": "rimraf ./dist"
+		"prebuild": "rimraf ./dist",
+		"pub": "npm publish --access public"
 	},
 	"files": [
-		"./**/*"
+		"dist/*"
 	],
 	"dependencies": {
-		"@affinity-lab/affinity-util": "github:affinity-lab/affinity-util",
+		"@affinity-lab/util": "^1.1.2",
 		"express": "^4.18.2",
 		"multer": "^1.4.5-lts.1",
 		"ts-morph": "^20.0.0",

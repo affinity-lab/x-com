@@ -4,7 +4,7 @@ exports.CommandResolver = void 0;
 const errors_1 = require("./errors");
 const request_parser_1 = require("./request-parser");
 const response_type_1 = require("./response-type");
-const affinity_util_1 = require("@affinity-lab/affinity-util");
+const util_1 = require("@affinity-lab/util");
 const x_com_cfg_1 = require("./x-com-cfg");
 class CommandResolver {
     commandSets;
@@ -30,7 +30,7 @@ class CommandResolver {
         if (!this.resolvers[cmd.client.name].hasOwnProperty(cmd.version))
             this.resolvers[cmd.client.name][cmd.version] = {};
         if (this.resolvers[cmd.client.name][cmd.version].hasOwnProperty(cmd.command))
-            throw (0, affinity_util_1.fatalError)(`CommandResolver ${cmd.client.name}/${cmd.version}/${cmd.command} has double declaration!`);
+            throw (0, util_1.fatalError)(`CommandResolver ${cmd.client.name}/${cmd.version}/${cmd.command} has double declaration!`);
         this.resolvers[cmd.client.name][cmd.version][cmd.command] = cmd;
     }
     async handle(client, version, command, req, res) {

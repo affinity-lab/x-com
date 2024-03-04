@@ -1,4 +1,4 @@
-import {scopeEnum} from "@affinity-lab/affinity-util";
+import {scopeEnum} from "@affinity-lab/util";
 
 export enum XCOM_API_EVENTS {
 	REQUEST_ACCEPTED = "REQUEST_ACCEPTED"
